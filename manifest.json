@@ -1,0 +1,43 @@
+{
+  "id": "tr.filmizlech.nuvio.plugins",
+  "name": "FilmizleCH Nuvio Plugins",
+  "logo": "https://filmizlech.org/apple-touch-icon.png",
+  "version": "0.1.0",
+  "author": "suayi",
+  "scrapers": [
+    {
+      "id": "filmizlech",
+      "name": "!FilmizleCH",
+      "logo": "https://www.google.com/s2/favicons?domain=filmizlech.org&sz=%size%",
+      "version": "0.1.0",
+      "filename": "providers/filmizlech.js",
+      "supportedTypes": ["movie", "tv"],
+      "contentLanguage": ["tr"],
+      "supportsStreams": true,
+      "supportsSearch": true,
+      "supportsComments": false,
+      "catalogs": [
+        { "id": "movies", "name": "Son Filmler", "type": "movie", "supportsPagination": true },
+        { "id": "popular", "name": "En Çok İzlenen Filmler", "type": "movie", "supportsPagination": true },
+        { "id": "top-rated", "name": "En Yüksek Puanlı Filmler", "type": "movie", "supportsPagination": true },
+        { "id": "yerli", "name": "Yerli Filmler", "type": "movie", "supportsPagination": true },
+        { "id": "aksiyon", "name": "Aksiyon", "type": "movie", "supportsPagination": true },
+        { "id": "korku", "name": "Korku", "type": "movie", "supportsPagination": true },
+        { "id": "komedi", "name": "Komedi", "type": "movie", "supportsPagination": true },
+        { "id": "dram", "name": "Dram", "type": "movie", "supportsPagination": true },
+        { "id": "bilim-kurgu", "name": "Bilim Kurgu", "type": "movie", "supportsPagination": true },
+        { "id": "gerilim", "name": "Gerilim", "type": "movie", "supportsPagination": true },
+        { "id": "macera", "name": "Macera", "type": "movie", "supportsPagination": true },
+        { "id": "romantik", "name": "Romantik", "type": "movie", "supportsPagination": true },
+        { "id": "animasyon", "name": "Animasyon", "type": "movie", "supportsPagination": true },
+        { "id": "fantastik", "name": "Fantastik", "type": "movie", "supportsPagination": true },
+        { "id": "gizem", "name": "Gizem", "type": "movie", "supportsPagination": true },
+        { "id": "suc", "name": "Suç", "type": "movie", "supportsPagination": true },
+        { "id": "belgesel", "name": "Belgesel", "type": "movie", "supportsPagination": true },
+        { "id": "aile", "name": "Aile", "type": "movie", "supportsPagination": true },
+        { "id": "series", "name": "Son Diziler", "type": "series", "supportsPagination": true },
+        { "id": "anime", "name": "Son Animeler", "type": "series", "supportsPagination": true }
+      ]
+    }
+  ]
+}
