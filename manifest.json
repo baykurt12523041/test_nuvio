@@ -2,14 +2,14 @@
   "id": "tr.filmizlech.nuvio.plugins",
   "name": "FilmizleCH Nuvio Plugins",
   "logo": "https://filmizlech.org/apple-touch-icon.png",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "suayi",
   "scrapers": [
     {
       "id": "filmizlech",
       "name": "!FilmizleCH",
       "logo": "https://www.google.com/s2/favicons?domain=filmizlech.org&sz=%size%",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "filename": "providers/filmizlech.js",
       "supportedTypes": ["movie", "tv"],
       "contentLanguage": ["tr"],
