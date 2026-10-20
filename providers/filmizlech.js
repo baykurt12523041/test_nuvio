@@ -294,9 +294,55 @@ async function resolveEmbed(embedUrl) {
         quality: numericQuality ? numericQuality[1] + 'p' : 'HD',
         title: playerTitle ? playerTitle[1] : 'Player',
         lang: 'TR',
-        headers: { 'Referer': innerOrigin + '/' },
+        headers: { 'User-Agent': UA, 'Referer': innerOrigin + '/' },
         subtitles: parseSubtitles(inner.body, inner.url)
     };
+}
+
+var PROBE_TIMEOUT_MS = 6000;
+
+function probeUrl(stream) {
+    if (typeof setTimeout !== 'function') return Promise.resolve(true);
+    var settled = false;
+    var fetchPromise = fetch(stream.url, { headers: stream.headers || headers((stream.headers && stream.headers.Referer) || config.fallback + '/') })
+        .then(function (response) {
+            settled = true;
+            return !!(response && response.ok);
+        })
+        .catch(function () {
+            settled = true;
+            return false;
+        });
+    var timerPromise = new Promise(function (resolve) {
+        var timer = setTimeout(function () {
+            if (!settled) resolve(false);
+        }, PROBE_TIMEOUT_MS);
+        fetchPromise.then(function () { clearTimeout(timer); });
+    });
+    return Promise.race([fetchPromise, timerPromise]);
+}
+
+function streamHost(stream) {
+    try {
+        return new URL(stream.url).host;
+    } catch {
+        return stream.url;
+    }
+}
+
+async function filterAliveStreams(streams) {
+    if (!streams.length || typeof setTimeout !== 'function') return streams;
+    var byHost = {};
+    for (var i = 0; i < streams.length; i++) {
+        var host = streamHost(streams[i]);
+        if (!byHost[host]) byHost[host] = streams[i];
+    }
+    var hosts = Object.keys(byHost);
+    var flags = {};
+    await Promise.all(hosts.map(function (host) {
+        return probeUrl(byHost[host]).then(function (ok) { flags[host] = ok; });
+    }));
+    return streams.filter(function (stream) { return flags[streamHost(stream)]; });
 }
 
 async function resolvePage(pageUrl) {
@@ -424,6 +470,13 @@ async function getStreams(id, type, season, episode) {
         }
     } catch (error) {
         logError('Akis', error);
+    }
+    if (streams.length) {
+        try {
+            streams = await filterAliveStreams(streams);
+        } catch (error) {
+            logError('Probe', error);
+        }
     }
     return streams;
 }
